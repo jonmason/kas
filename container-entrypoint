@@ -29,6 +29,9 @@ else
 		# Create a non-root user that will perform the actual build
 		useradd -o --uid $USER_ID --gid $GROUP_ID --create-home \
 			--home-dir /builder builder
+		# Add user to sudo to allow for running testimage inside kas container
+		usermod -aG sudo builder
+		echo 'builder ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 	fi
 
 	GOSU="gosu builder"
